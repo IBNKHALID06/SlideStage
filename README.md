@@ -2,8 +2,7 @@
 
 **SlideStage** is a privacy-focused, offline-first presentation studio that runs entirely in your browser. Record professional presentations with slides, webcam overlay, and live subtitles—no login or backend required.
 
-![SlideStage Studio Interface](https://via.placeholder.com/800x450?text=SlideStage+Studio+Interface)
-*(Replace this link with an actual screenshot of your studio interface)*
+![SlideStage Studio Interface](assets/screenshots/studio.png)
 
 ## ✨ Features
 
@@ -48,7 +47,7 @@
 
 | Landing Page | Studio Mode |
 |:---:|:---:|
-| ![Landing Page](https://via.placeholder.com/400x225?text=Landing+Page) | ![Studio Mode](https://via.placeholder.com/400x225?text=Studio+Mode) |
+| ![Landing Page](assets/screenshots/landing.png) | ![Studio Mode](assets/screenshots/studio.png) |
 
 ## 🤝 Contributing
 
