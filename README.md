@@ -47,7 +47,7 @@
 
 | Landing Page | Studio Mode |
 |:---:|:---:|
-| ![Landing Page](assets/screenshots/landing.png) | ![Studio Mode](assets/screenshots/studio.png) |
+| ![Landing Page](assets/screenshots/landing.jpeg) | ![Studio Mode](assets/screenshots/studio.jpeg) |
 
 ## 🤝 Contributing
 
