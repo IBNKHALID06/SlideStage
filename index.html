@@ -1,30 +1,282 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SlideStage — Offline Presentation Studio</title>
+  <title>SlideStage — Private, Offline Presentation Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/tailwind-output.css" />
+  <link rel="stylesheet" href="./css/landing-redesign.css" />
 </head>
-<body class="theme-dark">
-  <main class="landing">
-    <header>
-      <h1>SlideStage</h1>
-      <p class="subtitle">Private, offline, in-browser presentation studio</p>
-    </header>
-    <section class="cta">
-      <a class="button primary" href="./studio.html">Open Studio</a>
-      <div class="links">
-        <a target="_blank" href="https://github.com/ibnkhalid06/SlideStage">GitHub Repo</a>
-        <a target="_blank" href="https://ibnkhalid06.github.io/SlideStage/">Live Demo</a>
+<body class="theme-dark bg-slidestage-bg text-slidestage-text font-sans antialiased selection:bg-slidestage-primary selection:text-white">
+  
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 border-b border-slidestage-border/40 bg-slidestage-bg/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center gap-2">
+          <svg width="24" height="24" viewBox="0 0 64 64" fill="none" class="text-slidestage-primary">
+            <rect x="8" y="12" width="48" height="40" rx="2" stroke="currentColor" stroke-width="4" fill="none"/>
+            <circle cx="24" cy="24" r="4" fill="currentColor"/>
+            <path d="M 32 32 L 48 32 M 32 40 L 48 40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <span class="font-bold text-lg tracking-tight">SlideStage</span>
+        </div>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slidestage-text-secondary">
+          <a href="#features" class="hover:text-slidestage-text transition-colors">Features</a>
+          <a href="#privacy" class="hover:text-slidestage-text transition-colors">Privacy</a>
+          <a href="#how-it-works" class="hover:text-slidestage-text transition-colors">How it Works</a>
+          <a href="https://github.com/ibnkhalid06/SlideStage" target="_blank" class="hover:text-slidestage-text transition-colors">GitHub</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="./studio.html" class="button primary text-sm py-2 px-4">Open Studio</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-16">
+    
+    <!-- Hero Section -->
+    <section class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 text-center">
+      <div class="absolute inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-slidestage-primary/10 blur-[100px] rounded-full opacity-50"></div>
+      </div>
+      
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slidestage-surface border border-slidestage-border text-xs font-medium text-slidestage-primary mb-8 animate-fade-in-up">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-slidestage-primary opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-slidestage-primary"></span>
+        </span>
+        v1.0 Now Available
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-up delay-100">
+        Your Private, Offline <br class="hidden md:block" />
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slidestage-primary to-slidestage-accent">Presentation Studio</span>
+      </h1>
+      
+      <p class="text-xl text-slidestage-text-secondary max-w-2xl mx-auto mb-10 animate-fade-in-up delay-200">
+        Create, present, subtitle, and record — all inside your browser. <br />
+        No login. No backend. No cloud. Fully private.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300">
+        <a href="./studio.html" class="button primary text-lg px-8 py-4 h-auto w-full sm:w-auto justify-center">
+          Open Studio
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        </a>
+        <a href="https://github.com/ibnkhalid06/SlideStage" target="_blank" class="button text-lg px-8 py-4 h-auto w-full sm:w-auto justify-center bg-slidestage-surface border-slidestage-border hover:bg-slidestage-border/50">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+      </div>
+
+      <div class="mt-16 relative rounded-xl overflow-hidden border border-slidestage-border shadow-2xl animate-fade-in-up delay-500 group">
+        <div class="absolute inset-0 bg-gradient-to-t from-slidestage-bg via-transparent to-transparent z-10"></div>
+        <img src="./assets/screenshots/studio.jpeg" alt="SlideStage Studio Interface" class="w-full h-auto transform transition-transform duration-700 group-hover:scale-[1.02]" />
       </div>
     </section>
-    <footer class="footnote">
-      <p>No login. No backend. Runs entirely in your browser.</p>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-24 bg-slidestage-surface/30 border-y border-slidestage-border/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">Everything you need to present confidently</h2>
+          <p class="text-slidestage-text-secondary max-w-2xl mx-auto">Powerful tools packed into a lightweight browser application.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Feature 1 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Upload & View Slides</h3>
+            <p class="text-slidestage-text-secondary">Open PDFs instantly in a clean, distraction-free viewer. PPTX supported via auto-conversion.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Webcam Overlay</h3>
+            <p class="text-slidestage-text-secondary">Appear alongside your slides with a draggable, resizable webcam box.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Real-Time Subtitles</h3>
+            <p class="text-slidestage-text-secondary">Powered by Web Speech API — speech recognition runs entirely on your device.</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Present Mode</h3>
+            <p class="text-slidestage-text-secondary">Hide controls and present fullscreen with clean overlays.</p>
+          </div>
+
+          <!-- Feature 5 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Speaker Notes</h3>
+            <p class="text-slidestage-text-secondary">Keep notes visible only to you while presenting.</p>
+          </div>
+
+          <!-- Feature 6 -->
+          <div class="p-6 rounded-2xl bg-slidestage-surface border border-slidestage-border hover:border-slidestage-primary/50 transition-colors group">
+            <div class="w-12 h-12 rounded-lg bg-slidestage-primary/10 flex items-center justify-center text-slidestage-primary mb-4 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Dark & Light Themes</h3>
+            <p class="text-slidestage-text-secondary">Choose the look that suits you best.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section id="privacy" class="py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-slidestage-surface rounded-3xl p-8 md:p-16 border border-slidestage-border relative overflow-hidden">
+          <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-slidestage-success/10 rounded-full blur-3xl"></div>
+          
+          <div class="relative z-10 text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slidestage-success/10 text-slidestage-success mb-6">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Your data stays with you. Always.</h2>
+            <p class="text-xl text-slidestage-text-secondary mb-8">
+              SlideStage runs entirely in your browser. We never store your presentations, audio, webcam feed, or recordings.
+              Everything stays local — no servers, no accounts, no tracking.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-medium text-slidestage-text-secondary">
+              <span class="flex items-center gap-2 px-4 py-2 rounded-full bg-slidestage-bg border border-slidestage-border">
+                <svg class="w-4 h-4 text-slidestage-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                No Servers
+              </span>
+              <span class="flex items-center gap-2 px-4 py-2 rounded-full bg-slidestage-bg border border-slidestage-border">
+                <svg class="w-4 h-4 text-slidestage-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                No Accounts
+              </span>
+              <span class="flex items-center gap-2 px-4 py-2 rounded-full bg-slidestage-bg border border-slidestage-border">
+                <svg class="w-4 h-4 text-slidestage-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                No Tracking
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-24 bg-slidestage-surface/30 border-y border-slidestage-border/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+          <!-- Connecting Line (Desktop) -->
+          <div class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slidestage-border/50 -z-10"></div>
+
+          <!-- Step 1 -->
+          <div class="text-center relative">
+            <div class="w-16 h-16 mx-auto bg-slidestage-surface border-2 border-slidestage-primary rounded-full flex items-center justify-center text-xl font-bold text-slidestage-primary mb-4 z-10">1</div>
+            <h3 class="font-bold mb-2">Load PDF</h3>
+            <p class="text-sm text-slidestage-text-secondary">Upload your slides instantly.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="text-center relative">
+            <div class="w-16 h-16 mx-auto bg-slidestage-surface border-2 border-slidestage-border rounded-full flex items-center justify-center text-xl font-bold text-slidestage-text-secondary mb-4 z-10">2</div>
+            <h3 class="font-bold mb-2">Setup</h3>
+            <p class="text-sm text-slidestage-text-secondary">Enable webcam & subtitles.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="text-center relative">
+            <div class="w-16 h-16 mx-auto bg-slidestage-surface border-2 border-slidestage-border rounded-full flex items-center justify-center text-xl font-bold text-slidestage-text-secondary mb-4 z-10">3</div>
+            <h3 class="font-bold mb-2">Present</h3>
+            <p class="text-sm text-slidestage-text-secondary">Enter distraction-free mode.</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="text-center relative">
+            <div class="w-16 h-16 mx-auto bg-slidestage-surface border-2 border-slidestage-border rounded-full flex items-center justify-center text-xl font-bold text-slidestage-text-secondary mb-4 z-10">4</div>
+            <h3 class="font-bold mb-2">Record</h3>
+            <p class="text-sm text-slidestage-text-secondary">Capture your tab & audio.</p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="text-center relative">
+            <div class="w-16 h-16 mx-auto bg-slidestage-surface border-2 border-slidestage-border rounded-full flex items-center justify-center text-xl font-bold text-slidestage-text-secondary mb-4 z-10">5</div>
+            <h3 class="font-bold mb-2">Download</h3>
+            <p class="text-sm text-slidestage-text-secondary">Save video locally.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developers & Support -->
+    <section class="py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16">
+        <!-- Developers -->
+        <div>
+          <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-slidestage-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            For Developers
+          </h3>
+          <p class="text-slidestage-text-secondary mb-6">
+            SlideStage is built using modern web standards. Everything is open-source and designed to be extended.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1 rounded-md bg-slidestage-surface border border-slidestage-border text-xs font-mono">Vanilla JS</span>
+            <span class="px-3 py-1 rounded-md bg-slidestage-surface border border-slidestage-border text-xs font-mono">WebRTC</span>
+            <span class="px-3 py-1 rounded-md bg-slidestage-surface border border-slidestage-border text-xs font-mono">MediaRecorder</span>
+            <span class="px-3 py-1 rounded-md bg-slidestage-surface border border-slidestage-border text-xs font-mono">PDF.js</span>
+            <span class="px-3 py-1 rounded-md bg-slidestage-surface border border-slidestage-border text-xs font-mono">Tailwind CSS</span>
+          </div>
+          <a href="https://github.com/ibnkhalid06/SlideStage" target="_blank" class="text-slidestage-primary hover:underline font-medium inline-flex items-center">
+            View GitHub Repo
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-slidestage-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            Support the Project
+          </h3>
+          <p class="text-slidestage-text-secondary mb-6">
+            If you’d like to support development, upgrades, and hosting, consider buying me a coffee. Your support helps keep SlideStage free, private, and open.
+          </p>
+          <a href="https://ko-fi.com/wise_k" target="_blank" class="button text-sm px-6 py-3 bg-[#FF5E5B] border-[#FF5E5B] text-white hover:bg-[#FF5E5B]/90">
+            Buy me a coffee
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slidestage-border/50 text-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-slidestage-text-secondary text-sm">
+          SlideStage © 2025 • Built by Khalid • Open-source • Privacy-first
+        </p>
+      </div>
     </footer>
+
   </main>
   <script type="module" src="./js/theme.js"></script>
 </body>

@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/tailwind-output.css" />
+  <link rel="stylesheet" href="./css/studio-controls.css" />
   <!-- pdf.js loader (tries multiple CDNs) -->
   <script src="./js/pdf-loader.js"></script>
   <script>
@@ -24,25 +26,42 @@
 <body class="theme-dark">
   <div class="studio">
     <header class="topbar">
-      <div class="left">
-        <label class="file-input">
+      <!-- Navigation Group: Load PDF, Prev, Next, Page Counter -->
+      <nav class="control-group" data-group="navigation" aria-label="Navigation controls">
+        <label class="file-input" title="Load PDF or PPTX file">
           <input type="file" id="pdfFileInput" accept="application/pdf,.pptx" />
           <span class="button">Load PDF</span>
         </label>
         <span class="muted" title="PPTX note">Tip: PPTX uploads auto-convert to PDF in browser.</span>
-        <button class="button" id="prevSlide" title="Left Arrow">Prev</button>
-        <button class="button" id="nextSlide" title="Right Arrow">Next</button>
-        <span id="pageIndicator" class="muted"></span>
-      </div>
-      <div class="right">
-        <button class="button" id="presentToggle">Present</button>
-        <button class="button" id="themeToggle">Theme</button>
-        <button class="button" id="webcamToggle">Enable Webcam</button>
-        <button class="button" id="subtitlesToggle">Enable Subtitles</button>
-        <button class="button" id="recordStart">Start Recording</button>
-        <button class="button" id="recordStop" disabled>Stop Recording</button>
-        <a class="button" target="_blank" href="https://ko-fi.com/wise_k">Donate</a>
-      </div>
+        <button class="button" id="prevSlide" title="Previous slide (Left Arrow)">Prev</button>
+        <button class="button" id="nextSlide" title="Next slide (Right Arrow)">Next</button>
+        <span id="pageIndicator" class="muted" aria-live="polite"></span>
+      </nav>
+
+      <div class="btn-group-divider"></div>
+
+      <!-- Presentation Group: Present Mode -->
+      <nav class="control-group" data-group="presentation" aria-label="Presentation controls">
+        <button class="button" id="presentToggle" title="Toggle presentation mode">Present</button>
+      </nav>
+
+      <div class="btn-group-divider"></div>
+
+      <!-- Recording & Support Group: Recording Controls + Donate -->
+      <nav class="control-group" data-group="recording" aria-label="Recording controls">
+        <button class="button" id="recordStart" title="Start recording presentation">Start Recording</button>
+        <button class="button" id="recordStop" disabled title="Stop recording">Stop Recording</button>
+        <a class="button" target="_blank" href="https://ko-fi.com/wise_k" title="Support development">Donate</a>
+      </nav>
+
+      <div class="btn-group-divider"></div>
+
+      <!-- Settings Group: Theme, Webcam, Subtitles -->
+      <nav class="control-group" data-group="settings" aria-label="Display and feature toggles">
+        <button class="button" id="themeToggle" title="Toggle dark/light theme">Theme</button>
+        <button class="button" id="webcamToggle" title="Toggle webcam overlay">Enable Webcam</button>
+        <button class="button" id="subtitlesToggle" title="Toggle live subtitles">Enable Subtitles</button>
+      </nav>
     </header>
 
     <section class="workspace">

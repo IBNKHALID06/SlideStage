@@ -1,0 +1,194 @@
+/* ============================================================================
+   STUDIO CONTROLS - BUTTON GROUPING STYLES
+   ============================================================================ */
+
+/* Base topbar styling (enhanced from style.css) */
+.topbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 100;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Control groups - semantic organization */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: nowrap;
+}
+
+.control-group[data-group="navigation"] {
+  /* Navigation: File input + Prev/Next + Page counter */
+}
+
+.control-group[data-group="presentation"] {
+  /* Presentation: Present button only */
+}
+
+.control-group[data-group="recording"] {
+  /* Recording: Start/Stop + Donate */
+}
+
+.control-group[data-group="settings"] {
+  /* Settings: Theme + Webcam + Subtitles toggles */
+}
+
+/* Visual divider between groups */
+.btn-group-divider {
+  height: 20px;
+  width: 1px;
+  background: var(--border);
+  opacity: 0.3;
+  margin: 0 var(--space-2);
+  flex-shrink: 0;
+}
+
+/* File input styling within control groups */
+.file-input {
+  position: relative;
+  display: inline-flex;
+}
+
+.file-input input {
+  display: none;
+}
+
+/* Muted text (page indicator, tips) */
+.topbar .muted {
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* ============================================================================
+   RESPONSIVE - MOBILE & TABLET
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .topbar {
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+  }
+
+  .control-group {
+    gap: var(--space-3);
+  }
+
+  .btn-group-divider {
+    margin: 0 var(--space-1);
+  }
+
+  .topbar .muted {
+    display: none; /* Hide PPTX tip on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .control-group {
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .btn-group-divider {
+    width: 100%;
+    height: 1px;
+    margin: var(--space-1) 0;
+    order: 1;
+  }
+
+  /* Reorder groups on mobile for better UX */
+  .control-group[data-group="navigation"] {
+    order: 1;
+    width: 100%;
+  }
+
+  .control-group[data-group="presentation"] {
+    order: 3;
+    width: auto;
+  }
+
+  .control-group[data-group="recording"] {
+    order: 5;
+    width: auto;
+  }
+
+  .control-group[data-group="settings"] {
+    order: 7;
+    width: 100%;
+  }
+
+  .topbar .button {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-2);
+  }
+
+  .control-group {
+    gap: var(--space-2);
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-group-divider {
+    display: none;
+  }
+
+  .control-group[data-group="settings"] {
+    flex-wrap: wrap;
+  }
+
+  .topbar .button {
+    padding: var(--space-1) var(--space-2);
+    font-size: 11px;
+    flex: 1;
+  }
+
+  .file-input .button {
+    flex: 0;
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+.control-group-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible states for keyboard navigation */
+.control-group button:focus-visible,
+.control-group a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}

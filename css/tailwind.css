@@ -1,0 +1,19 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom component layer for button enhancements */
+@layer components {
+  .btn-group-divider {
+    @apply h-5 w-px bg-slidestage-border opacity-30 mx-2;
+  }
+
+  .control-group {
+    @apply flex items-center gap-4 px-0;
+  }
+
+  .control-group-label {
+    @apply sr-only;
+  }
+}

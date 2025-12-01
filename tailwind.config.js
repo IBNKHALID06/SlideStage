@@ -1,0 +1,71 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './studio.html',
+    './donate.html',
+    './test-pdf.html',
+    './js/**/*.js',
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'slidestage-bg': 'var(--bg)',
+        'slidestage-surface': 'var(--surface)',
+        'slidestage-text': 'var(--text)',
+        'slidestage-text-secondary': 'var(--text-secondary)',
+        'slidestage-muted': 'var(--muted)',
+        'slidestage-primary': 'var(--primary)',
+        'slidestage-accent': 'var(--accent)',
+        'slidestage-success': 'var(--success)',
+        'slidestage-border': 'var(--border)',
+      },
+      spacing: {
+        '1': 'var(--space-1)',
+        '2': 'var(--space-2)',
+        '3': 'var(--space-3)',
+        '4': 'var(--space-4)',
+        '5': 'var(--space-5)',
+        '6': 'var(--space-6)',
+        '8': 'var(--space-8)',
+        '10': 'var(--space-10)',
+        '12': 'var(--space-12)',
+      },
+      borderRadius: {
+        'sm': 'var(--radius-sm)',
+        'md': 'var(--radius-md)',
+        'lg': 'var(--radius-lg)',
+      },
+      transitionDuration: {
+        'fast': 'var(--transition-fast)',
+        'base': 'var(--transition-base)',
+      },
+      boxShadow: {
+        'xs': 'var(--shadow-xs)',
+        'sm': 'var(--shadow-sm)',
+        'md': 'var(--shadow-md)',
+        'lg': 'var(--shadow-lg)',
+        'xl': 'var(--shadow-xl)',
+      },
+      fontSize: {
+        'xs': 'var(--text-xs)',
+        'sm': 'var(--text-sm)',
+        'base': 'var(--text-base)',
+        'lg': 'var(--text-lg)',
+        'xl': 'var(--text-xl)',
+        '2xl': 'var(--text-2xl)',
+        '3xl': 'var(--text-3xl)',
+        '4xl': 'var(--text-4xl)',
+        '5xl': 'var(--text-5xl)',
+        '6xl': 'var(--text-6xl)',
+      },
+      lineHeight: {
+        'tight': 'var(--lh-tight)',
+        'normal': 'var(--lh-normal)',
+        'relaxed': 'var(--lh-relaxed)',
+      },
+    },
+  },
+  plugins: [],
+};
