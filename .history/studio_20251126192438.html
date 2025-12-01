@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SlideStage Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+  <!-- pdf.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.313/pdf.min.js" integrity="sha512-nFJpi1tJQmCkWkQzVwMZQk8m2Ue3gE+3G5xM2lSBkA+oUTyEku2zF8U3wmtN1oQf3Qj2JxqjvU7bV2ZpR7pYbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    // Configure worker for pdf.js
+    if (window['pdfjsLib']) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.313/pdf.worker.min.js';
+    }
+  </script>
+</head>
+<body class="theme-dark">
+  <div class="studio">
+    <header class="topbar">
+      <div class="left">
+        <label class="file-input">
+          <input type="file" id="pdfFileInput" accept="application/pdf" />
+          <span class="button">Load PDF</span>
+        </label>
+        <button class="button" id="prevSlide" title="Left Arrow">Prev</button>
+        <button class="button" id="nextSlide" title="Right Arrow">Next</button>
+        <span id="pageIndicator" class="muted"></span>
+      </div>
+      <div class="right">
+        <button class="button" id="presentToggle">Present</button>
+        <button class="button" id="themeToggle">Theme</button>
+        <button class="button" id="webcamToggle">Enable Webcam</button>
+        <button class="button" id="subtitlesToggle">Enable Subtitles</button>
+        <button class="button" id="recordingHelp">Record This Tab</button>
+        <a class="button" target="_blank" href="./donate.html">Donate</a>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <div id="slideContainer" class="slides">
+        <canvas id="pdfCanvas"></canvas>
+        <!-- Webcam overlay -->
+        <div id="webcamBox" class="webcam hidden">
+          <video id="webcamVideo" autoplay muted playsinline></video>
+          <div class="resize-handle" data-dir="se"></div>
+        </div>
+        <!-- Subtitles overlay -->
+        <div id="subtitlesOverlay" class="subtitles hidden" aria-live="polite"></div>
+      </div>
+
+      <aside class="notes">
+        <h3>Notes</h3>
+        <textarea id="notesText" placeholder="Type your speaker notes here (not recorded)"></textarea>
+      </aside>
+    </section>
+
+    <footer class="help">
+      <div class="tips">
+        <p>Keyboard: Left/Right arrows to change slides. Drag webcam box to reposition. Resize from corner. Use the "Record This Tab" button for capture.</p>
+      </div>
+    </footer>
+  </div>
+
+  <dialog id="recordDialog">
+    <h3>Record This Tab</h3>
+    <p>To record slides, webcam, subtitles, cursor, and mic audio, use your browser's built-in tab capture:</p>
+    <ol>
+      <li>Open Chrome or Edge.</li>
+      <li>Click the browser's "Share" icon or use extensions to capture this tab.</li>
+      <li>Pick "Record This Tab"; include microphone audio.</li>
+      <li>Stop recording to save a .webm file locally.</li>
+    </ol>
+    <button class="button" id="closeRecordDialog">Close</button>
+  </dialog>
+
+  <dialog id="subtitlesDialog">
+    <h3>Subtitles (Vosk WASM)</h3>
+    <p>Real subtitles require an offline Vosk model. For privacy and offline use, place a small model in <code>assets/models/en/</code>. See instructions on the homepage or README.</p>
+    <ol>
+      <li>Download a small English model (e.g., <em>vosk-model-small-en-us-0.15</em>).</li>
+      <li>Unzip it into <code>assets/models/en/</code> so that <code>model.json</code> is inside that folder.</li>
+      <li>Reload the page and click "Enable Subtitles".</li>
+    </ol>
+    <p>Support development: <a href="https://ko-fi.com/wise_k" target="_blank">ko-fi.com/wise_k</a></p>
+    <button class="button" id="closeSubtitlesDialog">Close</button>
+  </dialog>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

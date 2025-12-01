@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDF Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #eee; }
+    #output { white-space: pre-wrap; background: #222; padding: 10px; margin: 10px 0; height: 300px; overflow-y: auto; }
+    canvas { border: 1px solid #666; max-width: 100%; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>PDF Test</h1>
+  <label>Select a PDF: <input type="file" id="pdfFile" accept="application/pdf" /></label>
+  <div id="output"></div>
+  <canvas id="testCanvas"></canvas>
+
+  <!-- pdf.js from CDN -->
+  <!-- pdf.js loader (tries multiple CDNs) -->
+  <script src="./js/pdf-loader.js"></script>
+  <script>
+    const log = (msg) => {
+      document.getElementById('output').textContent += msg + '\n';
+      console.log(msg);
+    };
+
+    // Initialize on page load
+    (async () => {
+      const loaded = await window.ensurePdfJs();
+      if (loaded) {
+        log('✓ pdf.js loaded, version: ' + pdfjsLib.version);
+      } else {
+        log('✗ pdf.js failed to load from any CDN');
+      }
+    })();
+
+    document.getElementById('pdfFile').addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      log(`\nLoading: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        log(`✓ File read, ${arrayBuffer.byteLength} bytes`);
+
+        // Ensure pdf.js is loaded before use
+        const loaded = await window.ensurePdfJs?.();
+        if (!loaded) {
+          log('✗ pdf.js not available after waiting');
+          throw new Error('pdf.js failed to load');
+        }
+
+        if (typeof pdfjsLib === 'undefined') {
+          log('✗ pdfjsLib still not defined');
+          throw new Error('pdfjsLib not found');
+        }
+
+        const task = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await task.promise;
+        log(`✓ PDF parsed, ${pdf.numPages} pages`);
+
+        // Render first page
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        log('Rendering page 1...');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        log('✓ Page 1 rendered successfully');
+      } catch (err) {
+        log(`✗ Error: ${err.message}`);
+      }
+    });
+  </script>
+</body>
+</html>

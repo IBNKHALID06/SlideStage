@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDF Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #eee; }
+    #output { white-space: pre-wrap; background: #222; padding: 10px; margin: 10px 0; height: 300px; overflow-y: auto; }
+    canvas { border: 1px solid #666; max-width: 100%; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>PDF Test</h1>
+  <label>Select a PDF: <input type="file" id="pdfFile" accept="application/pdf" /></label>
+  <div id="output"></div>
+  <canvas id="testCanvas"></canvas>
+
+  <!-- pdf.js from CDN -->
+  <!-- pdf.js from CDN (jsDelivr + Cloudflare fallback) -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.313/build/pdf.min.js"></script>
+  <script>
+    const log = (msg) => {
+      document.getElementById('output').textContent += msg + '\n';
+      console.log(msg);
+    };
+
+    // Wait for pdf.js with fallback
+    const waitForPdfJs = async () => {
+      // Try jsDelivr first
+      let retries = 0;
+      while (typeof pdfjsLib === 'undefined' && retries < 40) {
+        await new Promise(r => setTimeout(r, 50));
+        retries++;
+      }
+      
+      if (typeof pdfjsLib !== 'undefined') {
+        return true;
+      }
+      
+      // Fallback: load from Cloudflare
+      log('jsDelivr timeout, trying Cloudflare CDN...');
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.313/pdf.min.js';
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+      
+      retries = 0;
+      while (typeof pdfjsLib === 'undefined' && retries < 40) {
+        await new Promise(r => setTimeout(r, 50));
+        retries++;
+      }
+      
+      return typeof pdfjsLib !== 'undefined';
+    };
+
+    // Initialize on page load
+    (async () => {
+      const loaded = await waitForPdfJs();
+      if (loaded) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.313/build/pdf.worker.min.js';
+        log('✓ pdf.js loaded, version: ' + pdfjsLib.version);
+      } else {
+        log('✗ pdf.js failed to load from both CDNs');
+      }
+    })();
+
+    document.getElementById('pdfFile').addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      log(`\nLoading: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
+
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        log(`✓ File read, ${arrayBuffer.byteLength} bytes`);
+
+        // Ensure pdf.js is loaded before use
+        const isLoaded = typeof pdfjsLib !== 'undefined';
+        if (!isLoaded) {
+          log('✗ pdf.js still not available, waiting...');
+          const ok = await waitForPdfJs();
+          if (!ok) {
+            log('✗ pdf.js failed to load');
+            return;
+          }
+        }
+
+        const task = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await task.promise;
+        log(`✓ PDF parsed, ${pdf.numPages} pages`);
+
+        // Render first page
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.getElementById('testCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        log('Rendering page 1...');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        log('✓ Page 1 rendered successfully');
+      } catch (err) {
+        log(`✗ Error: ${err.message}`);
+      }
+    });
+  </script>
+</body>
+</html>
