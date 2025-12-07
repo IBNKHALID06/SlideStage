@@ -24,6 +24,7 @@ const els = {
   canvas: document.getElementById('pdfCanvas'),
   webcamToggle: document.getElementById('webcamToggle'),
   subtitlesToggle: document.getElementById('subtitlesToggle'),
+  transcriptBtn: document.getElementById('transcriptBtn'),
   recordStart: document.getElementById('recordStart'),
   recordStop: document.getElementById('recordStop'),
   recordStatus: document.getElementById('recordStatus'),
@@ -203,11 +204,13 @@ els.subtitlesToggle.addEventListener('click', async () => {
   if (subtitles.enabled) {
     await subtitles.disable();
     updateToggleText(els.subtitlesToggle, false, 'Disable Subtitles', 'Enable Subtitles');
+    els.transcriptBtn.style.display = 'none';
     settings.set('subtitlesEnabled', false);
   } else {
     const result = await subtitles.enable();
     if (result.success) {
       updateToggleText(els.subtitlesToggle, true, 'Disable Subtitles', 'Enable Subtitles');
+      els.transcriptBtn.style.display = 'inline-block'; // Show transcript button
       settings.set('subtitlesEnabled', true);
       els.recordStatus.textContent = result.mode === 'web-speech' 
         ? 'Subtitles active (Web Speech API fallback).' 
@@ -218,6 +221,10 @@ els.subtitlesToggle.addEventListener('click', async () => {
       settings.set('subtitlesEnabled', false);
     }
   }
+});
+
+els.transcriptBtn?.addEventListener('click', () => {
+  subtitles.openTranscriptWindow();
 });
 
 els.subtitlesDialog?.addEventListener('cancel', (event) => {
