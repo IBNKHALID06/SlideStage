@@ -56,12 +56,11 @@
 
       <div class="btn-group-divider"></div>
 
-      <!-- Settings Group: Theme, Webcam, Subtitles, Transcript -->
+      <!-- Settings Group: Theme, Webcam, Subtitles -->
       <nav class="control-group" data-group="settings" aria-label="Display and feature toggles">
         <button class="button" id="themeToggle" title="Toggle dark/light theme">Theme</button>
         <button class="button" id="webcamToggle" title="Toggle webcam overlay">Enable Webcam</button>
         <button class="button" id="subtitlesToggle" title="Toggle live subtitles">Enable Subtitles</button>
-        <button class="button" id="transcriptBtn" title="Open floating transcript window" style="display: none;">Transcript</button>
       </nav>
     </header>
 
@@ -78,8 +77,22 @@
       </div>
 
       <aside class="notes">
-        <h3>Notes</h3>
-        <textarea id="notesText" placeholder="Type your speaker notes here (not recorded)"></textarea>
+        <div style="display: flex; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+          <button class="button" id="scriptTab" style="flex: 1; border-bottom: 2px solid var(--primary); background: var(--surface); border-radius: 0; padding: 8px;">Script</button>
+          <button class="button" id="notesTab" style="flex: 1; border-bottom: none; background: var(--surface); border-radius: 0; padding: 8px;">Notes</button>
+        </div>
+        <div id="scriptPanel" style="display: block; height: 100%; display: flex; flex-direction: column;">
+          <textarea id="scriptText" placeholder="Paste or type your presentation script here (not recorded)" style="flex: 1; resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
+            <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">Font+</button>
+            <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">Font-</button>
+            <button class="button" id="scriptClear" style="flex: 1; padding: 8px; font-size: 12px;">Clear</button>
+          </div>
+        </div>
+        <div id="notesPanel" style="display: none; height: 100%; display: flex; flex-direction: column;">
+          <h3>Notes</h3>
+          <textarea id="notesText" placeholder="Type your speaker notes here (not recorded)"></textarea>
+        </div>
       </aside>
     </section>
 

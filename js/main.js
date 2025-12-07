@@ -24,11 +24,18 @@ const els = {
   canvas: document.getElementById('pdfCanvas'),
   webcamToggle: document.getElementById('webcamToggle'),
   subtitlesToggle: document.getElementById('subtitlesToggle'),
-  transcriptBtn: document.getElementById('transcriptBtn'),
   recordStart: document.getElementById('recordStart'),
   recordStop: document.getElementById('recordStop'),
   recordStatus: document.getElementById('recordStatus'),
   notesText: document.getElementById('notesText'),
+  scriptText: document.getElementById('scriptText'),
+  scriptTab: document.getElementById('scriptTab'),
+  notesTab: document.getElementById('notesTab'),
+  scriptPanel: document.getElementById('scriptPanel'),
+  notesPanel: document.getElementById('notesPanel'),
+  scriptFontIncrease: document.getElementById('scriptFontIncrease'),
+  scriptFontDecrease: document.getElementById('scriptFontDecrease'),
+  scriptClear: document.getElementById('scriptClear'),
   themeToggle: document.getElementById('themeToggle'),
   presentToggle: document.getElementById('presentToggle'),
   spotlightToggle: document.getElementById('spotlightToggle'),
@@ -204,13 +211,11 @@ els.subtitlesToggle.addEventListener('click', async () => {
   if (subtitles.enabled) {
     await subtitles.disable();
     updateToggleText(els.subtitlesToggle, false, 'Disable Subtitles', 'Enable Subtitles');
-    els.transcriptBtn.style.display = 'none';
     settings.set('subtitlesEnabled', false);
   } else {
     const result = await subtitles.enable();
     if (result.success) {
       updateToggleText(els.subtitlesToggle, true, 'Disable Subtitles', 'Enable Subtitles');
-      els.transcriptBtn.style.display = 'inline-block'; // Show transcript button
       settings.set('subtitlesEnabled', true);
       els.recordStatus.textContent = result.mode === 'web-speech' 
         ? 'Subtitles active (Web Speech API fallback).' 
@@ -223,8 +228,59 @@ els.subtitlesToggle.addEventListener('click', async () => {
   }
 });
 
-els.transcriptBtn?.addEventListener('click', () => {
-  subtitles.openTranscriptWindow();
+// Script/Teleprompter controls
+els.scriptFontIncrease.addEventListener('click', () => {
+  let size = parseInt(getComputedStyle(els.scriptText).fontSize) || 16;
+  size += 2;
+  els.scriptText.style.fontSize = size + 'px';
+  localStorage.setItem('slidestage:scriptFontSize', size);
+});
+
+els.scriptFontDecrease.addEventListener('click', () => {
+  let size = parseInt(getComputedStyle(els.scriptText).fontSize) || 16;
+  if (size > 10) {
+    size -= 2;
+    els.scriptText.style.fontSize = size + 'px';
+    localStorage.setItem('slidestage:scriptFontSize', size);
+  }
+});
+
+els.scriptClear.addEventListener('click', () => {
+  if (els.scriptText.value && confirm('Clear script content?')) {
+    els.scriptText.value = '';
+    localStorage.setItem('slidestage:scriptContent', '');
+  }
+});
+
+els.scriptTab.addEventListener('click', () => {
+  els.scriptPanel.style.display = 'block';
+  els.notesPanel.style.display = 'none';
+  els.scriptTab.style.borderBottom = '2px solid var(--primary)';
+  els.notesTab.style.borderBottom = 'none';
+});
+
+els.notesTab.addEventListener('click', () => {
+  els.scriptPanel.style.display = 'none';
+  els.notesPanel.style.display = 'block';
+  els.notesTab.style.borderBottom = '2px solid var(--primary)';
+  els.scriptTab.style.borderBottom = 'none';
+});
+
+// Load persisted script content
+const savedScript = localStorage.getItem('slidestage:scriptContent');
+if (savedScript) {
+  els.scriptText.value = savedScript;
+}
+
+// Load persisted font size
+const savedFontSize = localStorage.getItem('slidestage:scriptFontSize');
+if (savedFontSize) {
+  els.scriptText.style.fontSize = savedFontSize + 'px';
+}
+
+// Auto-save script content
+els.scriptText.addEventListener('input', () => {
+  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
 });
 
 els.subtitlesDialog?.addEventListener('cancel', (event) => {
