@@ -36,13 +36,7 @@ const els = {
   scriptFontIncrease: document.getElementById('scriptFontIncrease'),
   scriptFontDecrease: document.getElementById('scriptFontDecrease'),
   scriptClear: document.getElementById('scriptClear'),
-  scriptExpandBtn: document.getElementById('scriptExpandBtn'),
-  scriptModal: document.getElementById('scriptModal'),
-  scriptModalText: document.getElementById('scriptModalText'),
-  scriptModalClose: document.getElementById('scriptModalClose'),
-  scriptModalFontIncrease: document.getElementById('scriptModalFontIncrease'),
-  scriptModalFontDecrease: document.getElementById('scriptModalFontDecrease'),
-  scriptModalClear: document.getElementById('scriptModalClear'),
+  scriptSlideIndicator: document.getElementById('scriptSlideIndicator'),
   themeToggle: document.getElementById('themeToggle'),
   presentToggle: document.getElementById('presentToggle'),
   spotlightToggle: document.getElementById('spotlightToggle'),
@@ -116,6 +110,8 @@ const initializeNotesHistory = () => {
 const slideViewer = new SlideViewer(els.canvas, (page, total) => {
   els.indicator.textContent = total ? `Page ${page} / ${total}` : '';
   settings.set('lastSlide', page);
+  loadSlideScript(page);
+  updateScriptSlideIndicator();
 });
 
 const webcamOverlay = new WebcamOverlay(
@@ -242,54 +238,41 @@ function changeScriptFontSize(delta) {
   if (size < 10) size = 10;
   if (size > 32) size = 32;
   els.scriptText.style.fontSize = size + 'px';
-  els.scriptModalText.style.fontSize = (size + 4) + 'px'; // Slightly larger in modal
   localStorage.setItem('slidestage:scriptFontSize', size);
+}
+
+// Get/Set script for current slide
+function getCurrentSlideScript() {
+  const slideNum = slideViewer?.currentPage || 1;
+  return localStorage.getItem(`slidestage:script:slide${slideNum}`) || '';
+}
+
+function saveCurrentSlideScript(content) {
+  const slideNum = slideViewer?.currentPage || 1;
+  localStorage.setItem(`slidestage:script:slide${slideNum}`, content);
+}
+
+// Update UI to show which slide's script we're viewing
+function updateScriptSlideIndicator() {
+  const slideNum = slideViewer?.currentPage || 1;
+  const totalSlides = slideViewer?.totalPages || '?';
+  els.scriptSlideIndicator.textContent = `Slide ${slideNum}/${totalSlides}`;
+}
+
+// Load script for a specific slide
+function loadSlideScript(slideNum) {
+  const script = localStorage.getItem(`slidestage:script:slide${slideNum}`) || '';
+  els.scriptText.value = script;
 }
 
 els.scriptFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
 els.scriptFontDecrease.addEventListener('click', () => changeScriptFontSize(-2));
 
 els.scriptClear.addEventListener('click', () => {
-  if (els.scriptText.value && confirm('Clear script content?')) {
+  if (els.scriptText.value && confirm('Clear script for this slide?')) {
     els.scriptText.value = '';
-    els.scriptModalText.value = '';
-    localStorage.setItem('slidestage:scriptContent', '');
+    saveCurrentSlideScript('');
   }
-});
-
-// Modal font controls
-els.scriptModalFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
-els.scriptModalFontDecrease.addEventListener('click', () => changeScriptFontSize(-2));
-
-els.scriptModalClear.addEventListener('click', () => {
-  if (els.scriptModalText.value && confirm('Clear script content?')) {
-    els.scriptModalText.value = '';
-    els.scriptText.value = '';
-    localStorage.setItem('slidestage:scriptContent', '');
-  }
-});
-
-// Expand to fullscreen modal
-els.scriptExpandBtn.addEventListener('click', () => {
-  els.scriptModalText.value = els.scriptText.value;
-  els.scriptModal.showModal();
-});
-
-els.scriptModalClose.addEventListener('click', () => {
-  els.scriptText.value = els.scriptModalText.value;
-  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
-  els.scriptModal.close();
-});
-
-// Keep modals in sync
-els.scriptText.addEventListener('input', () => {
-  els.scriptModalText.value = els.scriptText.value;
-  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
-});
-
-els.scriptModalText.addEventListener('input', () => {
-  els.scriptText.value = els.scriptModalText.value;
-  localStorage.setItem('slidestage:scriptContent', els.scriptModalText.value);
 });
 
 els.scriptTab.addEventListener('click', () => {
@@ -306,18 +289,15 @@ els.notesTab.addEventListener('click', () => {
   els.scriptTab.style.borderBottom = 'none';
 });
 
-// Load persisted script content
-const savedScript = localStorage.getItem('slidestage:scriptContent');
-if (savedScript) {
-  els.scriptText.value = savedScript;
-  els.scriptModalText.value = savedScript;
-}
+// Save script when user types
+els.scriptText.addEventListener('input', () => {
+  saveCurrentSlideScript(els.scriptText.value);
+});
 
 // Load persisted font size
 const savedFontSize = localStorage.getItem('slidestage:scriptFontSize');
 if (savedFontSize) {
   els.scriptText.style.fontSize = savedFontSize + 'px';
-  els.scriptModalText.style.fontSize = (parseInt(savedFontSize) + 4) + 'px';
 }
 
 els.subtitlesDialog?.addEventListener('cancel', (event) => {
