@@ -36,6 +36,13 @@ const els = {
   scriptFontIncrease: document.getElementById('scriptFontIncrease'),
   scriptFontDecrease: document.getElementById('scriptFontDecrease'),
   scriptClear: document.getElementById('scriptClear'),
+  scriptExpandBtn: document.getElementById('scriptExpandBtn'),
+  scriptModal: document.getElementById('scriptModal'),
+  scriptModalText: document.getElementById('scriptModalText'),
+  scriptModalClose: document.getElementById('scriptModalClose'),
+  scriptModalFontIncrease: document.getElementById('scriptModalFontIncrease'),
+  scriptModalFontDecrease: document.getElementById('scriptModalFontDecrease'),
+  scriptModalClear: document.getElementById('scriptModalClear'),
   themeToggle: document.getElementById('themeToggle'),
   presentToggle: document.getElementById('presentToggle'),
   spotlightToggle: document.getElementById('spotlightToggle'),
@@ -228,28 +235,61 @@ els.subtitlesToggle.addEventListener('click', async () => {
   }
 });
 
-// Script/Teleprompter controls
-els.scriptFontIncrease.addEventListener('click', () => {
-  let size = parseInt(getComputedStyle(els.scriptText).fontSize) || 16;
-  size += 2;
+// Script/Teleprompter controls - Helper function to change font size
+function changeScriptFontSize(delta) {
+  let size = parseInt(getComputedStyle(els.scriptText).fontSize) || 14;
+  size += delta;
+  if (size < 10) size = 10;
+  if (size > 32) size = 32;
   els.scriptText.style.fontSize = size + 'px';
+  els.scriptModalText.style.fontSize = (size + 4) + 'px'; // Slightly larger in modal
   localStorage.setItem('slidestage:scriptFontSize', size);
-});
+}
 
-els.scriptFontDecrease.addEventListener('click', () => {
-  let size = parseInt(getComputedStyle(els.scriptText).fontSize) || 16;
-  if (size > 10) {
-    size -= 2;
-    els.scriptText.style.fontSize = size + 'px';
-    localStorage.setItem('slidestage:scriptFontSize', size);
-  }
-});
+els.scriptFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
+els.scriptFontDecrease.addEventListener('click', () => changeScriptFontSize(-2));
 
 els.scriptClear.addEventListener('click', () => {
   if (els.scriptText.value && confirm('Clear script content?')) {
     els.scriptText.value = '';
+    els.scriptModalText.value = '';
     localStorage.setItem('slidestage:scriptContent', '');
   }
+});
+
+// Modal font controls
+els.scriptModalFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
+els.scriptModalFontDecrease.addEventListener('click', () => changeScriptFontSize(-2));
+
+els.scriptModalClear.addEventListener('click', () => {
+  if (els.scriptModalText.value && confirm('Clear script content?')) {
+    els.scriptModalText.value = '';
+    els.scriptText.value = '';
+    localStorage.setItem('slidestage:scriptContent', '');
+  }
+});
+
+// Expand to fullscreen modal
+els.scriptExpandBtn.addEventListener('click', () => {
+  els.scriptModalText.value = els.scriptText.value;
+  els.scriptModal.showModal();
+});
+
+els.scriptModalClose.addEventListener('click', () => {
+  els.scriptText.value = els.scriptModalText.value;
+  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
+  els.scriptModal.close();
+});
+
+// Keep modals in sync
+els.scriptText.addEventListener('input', () => {
+  els.scriptModalText.value = els.scriptText.value;
+  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
+});
+
+els.scriptModalText.addEventListener('input', () => {
+  els.scriptText.value = els.scriptModalText.value;
+  localStorage.setItem('slidestage:scriptContent', els.scriptModalText.value);
 });
 
 els.scriptTab.addEventListener('click', () => {
@@ -270,18 +310,15 @@ els.notesTab.addEventListener('click', () => {
 const savedScript = localStorage.getItem('slidestage:scriptContent');
 if (savedScript) {
   els.scriptText.value = savedScript;
+  els.scriptModalText.value = savedScript;
 }
 
 // Load persisted font size
 const savedFontSize = localStorage.getItem('slidestage:scriptFontSize');
 if (savedFontSize) {
   els.scriptText.style.fontSize = savedFontSize + 'px';
+  els.scriptModalText.style.fontSize = (parseInt(savedFontSize) + 4) + 'px';
 }
-
-// Auto-save script content
-els.scriptText.addEventListener('input', () => {
-  localStorage.setItem('slidestage:scriptContent', els.scriptText.value);
-});
 
 els.subtitlesDialog?.addEventListener('cancel', (event) => {
   event.preventDefault();

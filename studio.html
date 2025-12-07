@@ -80,12 +80,13 @@
         <div style="display: flex; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
           <button class="button" id="scriptTab" style="flex: 1; border-bottom: 2px solid var(--primary); background: var(--surface); border-radius: 0; padding: 8px;">Script</button>
           <button class="button" id="notesTab" style="flex: 1; border-bottom: none; background: var(--surface); border-radius: 0; padding: 8px;">Notes</button>
+          <button class="button" id="scriptExpandBtn" title="Fullscreen Script" style="padding: 8px 12px; font-size: 12px;">⛶</button>
         </div>
         <div id="scriptPanel" style="display: block; height: 100%; display: flex; flex-direction: column;">
           <textarea id="scriptText" placeholder="Paste or type your presentation script here (not recorded)" style="flex: 1; resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
           <div style="display: flex; gap: 8px; margin-top: 8px;">
-            <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">Font+</button>
-            <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">Font-</button>
+            <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">A+</button>
+            <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">A-</button>
             <button class="button" id="scriptClear" style="flex: 1; padding: 8px; font-size: 12px;">Clear</button>
           </div>
         </div>
@@ -118,6 +119,20 @@
     <p>The application attempts to use Vosk (offline-capable) first, then falls back to the browser's built-in Web Speech API.</p>
     <p>Support development: <a href="https://ko-fi.com/wise_k" target="_blank">ko-fi.com/wise_k</a></p>
     <button class="button" id="closeSubtitlesDialog">Close</button>
+  </dialog>
+
+  <!-- Fullscreen Script Modal -->
+  <dialog id="scriptModal" style="width: 90vw; height: 90vh; max-width: 1200px; padding: 24px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h2 style="margin: 0;">Presentation Script</h2>
+      <button id="scriptModalClose" class="button" style="padding: 8px 12px;">✕</button>
+    </div>
+    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+      <button id="scriptModalFontIncrease" class="button" style="padding: 8px 16px;">A+ Larger</button>
+      <button id="scriptModalFontDecrease" class="button" style="padding: 8px 16px;">A- Smaller</button>
+      <button id="scriptModalClear" class="button" style="padding: 8px 16px;">Clear All</button>
+    </div>
+    <textarea id="scriptModalText" style="width: 100%; height: calc(100% - 140px); resize: none; padding: 16px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 18px; line-height: 1.8;"></textarea>
   </dialog>
 
   <script type="module" src="./js/main.js"></script>

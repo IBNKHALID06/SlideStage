@@ -560,6 +560,27 @@ dialog a:focus-visible {
   border-radius: var(--radius-sm);
 }
 
+/* Script Modal Specific Styling */
+#scriptModal {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 90vw;
+  height: 90vh;
+}
+
+#scriptModal h2 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+#scriptModal textarea {
+  resize: none;
+  overflow-y: auto;
+}
+
 /* ============================================================================
    HELP / INFO FOOTER
    ============================================================================ */
