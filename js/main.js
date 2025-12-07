@@ -29,14 +29,10 @@ const els = {
   recordStatus: document.getElementById('recordStatus'),
   notesText: document.getElementById('notesText'),
   scriptText: document.getElementById('scriptText'),
-  scriptTab: document.getElementById('scriptTab'),
-  notesTab: document.getElementById('notesTab'),
-  scriptPanel: document.getElementById('scriptPanel'),
-  notesPanel: document.getElementById('notesPanel'),
   scriptFontIncrease: document.getElementById('scriptFontIncrease'),
   scriptFontDecrease: document.getElementById('scriptFontDecrease'),
   scriptClear: document.getElementById('scriptClear'),
-  scriptSlideIndicator: document.getElementById('scriptSlideIndicator'),
+  scriptSlideNum: document.getElementById('scriptSlideNum'),
   themeToggle: document.getElementById('themeToggle'),
   presentToggle: document.getElementById('presentToggle'),
   spotlightToggle: document.getElementById('spotlightToggle'),
@@ -111,7 +107,6 @@ const slideViewer = new SlideViewer(els.canvas, (page, total) => {
   els.indicator.textContent = total ? `Page ${page} / ${total}` : '';
   settings.set('lastSlide', page);
   loadSlideScript(page);
-  updateScriptSlideIndicator();
 });
 
 const webcamOverlay = new WebcamOverlay(
@@ -252,17 +247,11 @@ function saveCurrentSlideScript(content) {
   localStorage.setItem(`slidestage:script:slide${slideNum}`, content);
 }
 
-// Update UI to show which slide's script we're viewing
-function updateScriptSlideIndicator() {
-  const slideNum = slideViewer?.currentPage || 1;
-  const totalSlides = slideViewer?.totalPages || '?';
-  els.scriptSlideIndicator.textContent = `Slide ${slideNum}/${totalSlides}`;
-}
-
 // Load script for a specific slide
 function loadSlideScript(slideNum) {
   const script = localStorage.getItem(`slidestage:script:slide${slideNum}`) || '';
   els.scriptText.value = script;
+  els.scriptSlideNum.textContent = slideNum;
 }
 
 els.scriptFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
@@ -273,20 +262,6 @@ els.scriptClear.addEventListener('click', () => {
     els.scriptText.value = '';
     saveCurrentSlideScript('');
   }
-});
-
-els.scriptTab.addEventListener('click', () => {
-  els.scriptPanel.style.display = 'block';
-  els.notesPanel.style.display = 'none';
-  els.scriptTab.style.borderBottom = '2px solid var(--primary)';
-  els.notesTab.style.borderBottom = 'none';
-});
-
-els.notesTab.addEventListener('click', () => {
-  els.scriptPanel.style.display = 'none';
-  els.notesPanel.style.display = 'block';
-  els.notesTab.style.borderBottom = '2px solid var(--primary)';
-  els.scriptTab.style.borderBottom = 'none';
 });
 
 // Save script when user types

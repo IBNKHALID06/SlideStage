@@ -77,22 +77,14 @@
       </div>
 
       <aside class="notes">
-        <div style="display: flex; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
-          <button class="button" id="scriptTab" style="flex: 1; border-bottom: 2px solid var(--primary); background: var(--surface); border-radius: 0; padding: 8px;">Script</button>
-          <button class="button" id="notesTab" style="flex: 1; border-bottom: none; background: var(--surface); border-radius: 0; padding: 8px;">Notes</button>
-          <span id="scriptSlideIndicator" style="flex: 1; text-align: center; padding: 8px; color: var(--text-secondary); font-size: 12px;">Slide —</span>
+        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+          <h3 style="margin: 0 0 8px 0; color: var(--text); font-size: 14px;">Script (Slide <span id="scriptSlideNum">1</span>)</h3>
         </div>
-        <div id="scriptPanel" style="display: block; height: 100%; display: flex; flex-direction: column;">
-          <textarea id="scriptText" placeholder="Paste or type your presentation script for this slide (not recorded)" style="flex: 1; resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
-          <div style="display: flex; gap: 8px; margin-top: 8px;">
-            <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">A+</button>
-            <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">A-</button>
-            <button class="button" id="scriptClear" style="flex: 1; padding: 8px; font-size: 12px;">Clear</button>
-          </div>
-        </div>
-        <div id="notesPanel" style="display: none; height: 100%; display: flex; flex-direction: column;">
-          <h3>Notes</h3>
-          <textarea id="notesText" placeholder="Type your speaker notes here (not recorded)"></textarea>
+        <textarea id="scriptText" placeholder="Paste your presentation script for this slide (not recorded)" style="width: 100%; height: calc(100% - 80px); resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">A+</button>
+          <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">A-</button>
+          <button class="button" id="scriptClear" style="flex: 1; padding: 8px; font-size: 12px;">Clear</button>
         </div>
       </aside>
     </section>
