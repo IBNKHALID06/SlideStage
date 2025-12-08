@@ -299,7 +299,9 @@ const startRecording = async () => {
     try {
       videoStream = await navigator.mediaDevices.getDisplayMedia({ 
         video: { 
-          frameRate: { ideal: 60, max: 60 }, // 60fps for smoother video
+          width: { ideal: 3840 },
+          height: { ideal: 2160 },
+          frameRate: { ideal: 60, max: 60 }, 
           displaySurface: 'browser' 
         },
         audio: false, // We use the mic stream separately
@@ -354,13 +356,11 @@ const startRecording = async () => {
 
     console.log('Selected MIME type for recording:', mimeType);
 
-    // Balanced quality for presentations: 1080p 60fps @ 8-10 Mbps
-    // This provides crisp slides + smooth animations without excessive file sizes
-    // (Good balance between quality and shareability on YouTube/courses)
+    // Maximum quality settings: 50 Mbps video, 320 kbps audio
     recorder = new MediaRecorder(combined, { 
       mimeType,
-      videoBitsPerSecond: 8000000,  // 8 Mbps - optimal for 1080p60 presentation quality
-      audioBitsPerSecond: 128000    // 128 kbps audio
+      videoBitsPerSecond: 50000000, // 50 Mbps
+      audioBitsPerSecond: 320000    // 320 kbps
     });
     recordChunks = [];
     recorder.ondataavailable = (e) => { if (e.data.size) recordChunks.push(e.data); };
@@ -407,7 +407,7 @@ const startRecording = async () => {
       }
     };
     recorder.start();
-    els.recordStatus.textContent = 'Recording… (1080p60 @ 8Mbps - optimized for presentation quality). Use Stop to finish.';
+    els.recordStatus.textContent = 'Recording… (Max Quality: 50Mbps @ 60fps). Use Stop to finish.';
     els.recordStart.disabled = true;
     els.recordStop.disabled = false;
     if (els.helpFooter) {
