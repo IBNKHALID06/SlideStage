@@ -651,7 +651,7 @@ dialog a:focus-visible {
   align-items: flex-end;
   padding-bottom: var(--space-5);
   z-index: 1000;
-  pointer-events: none; /* Allow clicks to pass through empty space */
+  pointer-events: auto; /* Capture hover events */
 }
 
 .present-controls.hidden {
