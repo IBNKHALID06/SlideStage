@@ -299,7 +299,7 @@ const startRecording = async () => {
     try {
       videoStream = await navigator.mediaDevices.getDisplayMedia({ 
         video: { 
-          frameRate: 30,
+          frameRate: { ideal: 60, max: 60 }, // 60fps for smoother video
           displaySurface: 'browser' 
         },
         audio: false, // We use the mic stream separately
@@ -354,11 +354,11 @@ const startRecording = async () => {
 
     console.log('Selected MIME type for recording:', mimeType);
 
-    // Improve quality with higher bitrate (5 Mbps for 1080p30fps)
+    // Maximize quality: 12 Mbps for 60fps + high audio bitrate
     recorder = new MediaRecorder(combined, { 
       mimeType,
-      videoBitsPerSecond: 5000000, // 5 Mbps for better quality
-      audioBitsPerSecond: 128000   // 128 kbps audio
+      videoBitsPerSecond: 12000000, // 12 Mbps for excellent quality at 60fps
+      audioBitsPerSecond: 192000    // 192 kbps audio (near CD quality)
     });
     recordChunks = [];
     recorder.ondataavailable = (e) => { if (e.data.size) recordChunks.push(e.data); };
@@ -381,9 +381,11 @@ const startRecording = async () => {
       combined.getTracks().forEach(t => t.stop());
       audioStream.getTracks().forEach(t => t.stop());
       
-      let msg = `Recording saved as ${ext.toUpperCase()}.`;
+      let msg = `Recording saved as ${ext.toUpperCase()} (${mimeType.split(';')[0]}).`;
       if (ext === 'webm') {
-        msg += ' (Note: Use VLC Player if Windows Media Player shows a black/green screen)';
+        msg += ' Use VLC to play. For better quality: Use FFmpeg or HandBrake to re-encode (e.g., libx264 or libx265).';
+      } else if (ext === 'mp4') {
+        msg += ' For maximum quality: Re-encode with HandBrake using H.265 codec.';
       }
       els.recordStatus.textContent = msg;
       
