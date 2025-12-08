@@ -411,7 +411,7 @@ const startRecording = async () => {
     els.recordStart.disabled = true;
     els.recordStop.disabled = false;
     if (els.helpFooter) {
-      els.helpFooter.style.display = 'none !important';
+      els.helpFooter.style.setProperty('display', 'none', 'important');
       els.helpFooter.style.visibility = 'hidden';
       els.helpFooter.style.height = '0';
       els.helpFooter.style.padding = '0';
