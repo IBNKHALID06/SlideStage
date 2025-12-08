@@ -354,8 +354,12 @@ const startRecording = async () => {
 
     console.log('Selected MIME type for recording:', mimeType);
 
-    // Important: bitsPerSecond can improve quality, but default is usually fine.
-    recorder = new MediaRecorder(combined, { mimeType });
+    // Improve quality with higher bitrate (5 Mbps for 1080p30fps)
+    recorder = new MediaRecorder(combined, { 
+      mimeType,
+      videoBitsPerSecond: 5000000, // 5 Mbps for better quality
+      audioBitsPerSecond: 128000   // 128 kbps audio
+    });
     recordChunks = [];
     recorder.ondataavailable = (e) => { if (e.data.size) recordChunks.push(e.data); };
     recorder.onstop = () => {
@@ -385,7 +389,14 @@ const startRecording = async () => {
       
       els.recordStart.disabled = false;
       els.recordStop.disabled = true;
-      if (els.helpFooter) els.helpFooter.style.display = '';
+      if (els.helpFooter) {
+        els.helpFooter.style.display = '';
+        els.helpFooter.style.visibility = 'visible';
+        els.helpFooter.style.height = 'auto';
+        els.helpFooter.style.padding = 'var(--space-4)';
+        els.helpFooter.style.margin = '';
+        els.helpFooter.style.border = '1px solid var(--border)';
+      }
       if (els.presentRecordBtn) {
         els.presentRecordBtn.textContent = 'Start Recording';
         els.presentRecordBtn.classList.remove('recording');
@@ -395,7 +406,14 @@ const startRecording = async () => {
     els.recordStatus.textContent = 'Recording… (slides + mic). Use Stop to finish.';
     els.recordStart.disabled = true;
     els.recordStop.disabled = false;
-    if (els.helpFooter) els.helpFooter.style.display = 'none';
+    if (els.helpFooter) {
+      els.helpFooter.style.display = 'none !important';
+      els.helpFooter.style.visibility = 'hidden';
+      els.helpFooter.style.height = '0';
+      els.helpFooter.style.padding = '0';
+      els.helpFooter.style.margin = '0';
+      els.helpFooter.style.border = 'none';
+    }
     if (els.presentRecordBtn) {
       els.presentRecordBtn.textContent = 'Stop Recording';
       els.presentRecordBtn.classList.add('recording');
