@@ -33,8 +33,6 @@
           <span class="button">Load PDF</span>
         </label>
         <span class="muted" title="PPTX note">Tip: PPTX uploads auto-convert to PDF in browser.</span>
-        <button class="button" id="prevSlide" title="Previous slide (Left Arrow)">Prev</button>
-        <button class="button" id="nextSlide" title="Next slide (Right Arrow)">Next</button>
         <span id="pageIndicator" class="muted" aria-live="polite"></span>
       </nav>
 
@@ -80,11 +78,15 @@
         <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
           <h3 style="margin: 0 0 8px 0; color: var(--text); font-size: 14px;">Script (Slide <span id="scriptSlideNum">1</span>)</h3>
         </div>
-        <textarea id="scriptText" placeholder="Paste your presentation script for this slide (not recorded)" style="width: 100%; height: calc(100% - 80px); resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
+        <textarea id="scriptText" placeholder="Paste your presentation script for this slide (not recorded)" style="width: 100%; height: calc(100% - 135px); resize: none; padding: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6;"></textarea>
         <div style="display: flex; gap: 8px; margin-top: 8px;">
           <button class="button" id="scriptFontIncrease" style="flex: 1; padding: 8px; font-size: 12px;">A+</button>
           <button class="button" id="scriptFontDecrease" style="flex: 1; padding: 8px; font-size: 12px;">A-</button>
           <button class="button" id="scriptClear" style="flex: 1; padding: 8px; font-size: 12px;">Clear</button>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button class="button" id="prevSlide" style="flex: 1; padding: 8px; font-size: 12px;">← Prev</button>
+          <button class="button" id="nextSlide" style="flex: 1; padding: 8px; font-size: 12px;">Next →</button>
         </div>
       </aside>
     </section>
