@@ -432,39 +432,41 @@ els.closeSubtitlesDialog?.addEventListener('click', () => {
 // NOTES WITH UNDO/REDO
 // ============================================================================
 
-els.notesText.value = settings.get('notes', '');
-initializeNotesHistory();
+if (els.notesText) {
+  els.notesText.value = settings.get('notes', '');
+  initializeNotesHistory();
 
-els.notesText.addEventListener('input', () => {
-  clearTimeout(notesDebounceTimer);
-  notesDebounceTimer = setTimeout(() => {
-    notesHistory.push(els.notesText.value);
-    settings.set('notes', els.notesText.value);
-  }, 300);
-});
+  els.notesText.addEventListener('input', () => {
+    clearTimeout(notesDebounceTimer);
+    notesDebounceTimer = setTimeout(() => {
+      notesHistory.push(els.notesText.value);
+      settings.set('notes', els.notesText.value);
+    }, 300);
+  });
 
-// Keyboard shortcuts for Undo/Redo
-window.addEventListener('keydown', (e) => {
-  if (els.notesText === document.activeElement) {
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
+  // Keyboard shortcuts for Undo/Redo
+  window.addEventListener('keydown', (e) => {
+    if (els.notesText === document.activeElement) {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isCtrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
 
-    if (isCtrlOrCmd && e.key === 'z' && !e.shiftKey) {
-      e.preventDefault();
-      const undoValue = notesHistory.undo();
-      if (undoValue !== null) {
-        els.notesText.value = undoValue;
-        settings.set('notes', undoValue);
+      if (isCtrlOrCmd && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        const undoValue = notesHistory.undo();
+        if (undoValue !== null) {
+          els.notesText.value = undoValue;
+          settings.set('notes', undoValue);
+        }
+      }
+
+      if ((isCtrlOrCmd && e.shiftKey && e.key === 'z') || (isCtrlOrCmd && e.key === 'y')) {
+        e.preventDefault();
+        const redoValue = notesHistory.redo();
+        if (redoValue !== null) {
+          els.notesText.value = redoValue;
+          settings.set('notes', redoValue);
+        }
       }
     }
-
-    if ((isCtrlOrCmd && e.shiftKey && e.key === 'z') || (isCtrlOrCmd && e.key === 'y')) {
-      e.preventDefault();
-      const redoValue = notesHistory.redo();
-      if (redoValue !== null) {
-        els.notesText.value = redoValue;
-        settings.set('notes', redoValue);
-      }
-    }
-  }
-});
+  });
+}
