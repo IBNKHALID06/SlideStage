@@ -250,23 +250,24 @@ function saveCurrentSlideScript(content) {
 
 // Load script for a specific slide
 function loadSlideScript(slideNum) {
+  if (!els.scriptText || !els.scriptSlideNum) return;
   const script = localStorage.getItem(`slidestage:script:slide${slideNum}`) || '';
   els.scriptText.value = script;
   els.scriptSlideNum.textContent = slideNum;
 }
 
-els.scriptFontIncrease.addEventListener('click', () => changeScriptFontSize(2));
-els.scriptFontDecrease.addEventListener('click', () => changeScriptFontSize(-2));
+els.scriptFontIncrease?.addEventListener('click', () => changeScriptFontSize(2));
+els.scriptFontDecrease?.addEventListener('click', () => changeScriptFontSize(-2));
 
-els.scriptClear.addEventListener('click', () => {
-  if (els.scriptText.value && confirm('Clear script for this slide?')) {
+els.scriptClear?.addEventListener('click', () => {
+  if (els.scriptText?.value && confirm('Clear script for this slide?')) {
     els.scriptText.value = '';
     saveCurrentSlideScript('');
   }
 });
 
 // Save script when user types
-els.scriptText.addEventListener('input', () => {
+els.scriptText?.addEventListener('input', () => {
   saveCurrentSlideScript(els.scriptText.value);
 });
 
