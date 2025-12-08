@@ -33,6 +33,7 @@ const els = {
   scriptFontDecrease: document.getElementById('scriptFontDecrease'),
   scriptClear: document.getElementById('scriptClear'),
   scriptSlideNum: document.getElementById('scriptSlideNum'),
+  helpFooter: document.getElementById('helpFooter'),
   themeToggle: document.getElementById('themeToggle'),
   presentToggle: document.getElementById('presentToggle'),
   spotlightToggle: document.getElementById('spotlightToggle'),
@@ -383,6 +384,7 @@ const startRecording = async () => {
       
       els.recordStart.disabled = false;
       els.recordStop.disabled = true;
+      if (els.helpFooter) els.helpFooter.style.display = '';
       if (els.presentRecordBtn) {
         els.presentRecordBtn.textContent = 'Start Recording';
         els.presentRecordBtn.classList.remove('recording');
@@ -392,6 +394,7 @@ const startRecording = async () => {
     els.recordStatus.textContent = 'Recording… (slides + mic). Use Stop to finish.';
     els.recordStart.disabled = true;
     els.recordStop.disabled = false;
+    if (els.helpFooter) els.helpFooter.style.display = 'none';
     if (els.presentRecordBtn) {
       els.presentRecordBtn.textContent = 'Stop Recording';
       els.presentRecordBtn.classList.add('recording');
